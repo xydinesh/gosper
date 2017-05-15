@@ -16,7 +16,6 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/xydinesh/gosper/prosper"
 )
 
@@ -36,8 +35,10 @@ func listRun(cmd *cobra.Command, args []string) {
 		return
 	}
 	t := p.GetToken()
-	viper.Set("token", t.Token)
-	fmt.Println(p.GetListings("", t.Token))
+	listings := p.GetListings(p.Filter, t.Token)
+	for _, result := range listings.Results {
+		fmt.Printf("%#v\n", result)
+	}
 
 }
 
